@@ -1,0 +1,33 @@
+body {
+    background-color: #87CEEB;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.cartoon {
+    width: 100px;
+    height: 100px;
+    background-color: #FF6347;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: move 3s infinite alternate;
+}
+
+@keyframes move {
+    0% {
+        left: 0;
+        top: 0;
+    }
+    50% {
+        left: calc(100% - 100px);
+        top: 0;
+    }
+    100% {
+        left: calc(100% - 100px);
+        top: calc(100% - 100px);
+    }
+}
