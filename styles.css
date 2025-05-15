@@ -1,105 +1,79 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const gameContainer = document.querySelector(".game-container");
-    const character = document.getElementById("character");
-    const scoreDisplay = document.getElementById("score");
-    
-    let characterX = 100;
-    let characterY = 100;
-    let jumpHeight = 150;
-    let gravity = 5;
-    let isJumping = false;
-    let score = 0;
-    let obstacleInterval;
-    let isGameRunning = true;
+body {
+    background-color: #87CEEB;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
 
-    // د جمپ کولو سیستم
-    function jump() {
-        if (!isJumping) {
-            isJumping = true;
-            let jumpCount = 0;
+.game-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
 
-            const jumpInterval = setInterval(() => {
-                if (jumpCount >= jumpHeight) {
-                    clearInterval(jumpInterval);
-                    fall();
-                } else {
-                    jumpCount += 5;
-                    character.style.bottom = `${characterY + jumpCount}px`;
-                }
-            }, 20);
-        }
-    }
+.score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
 
-    // د غورځېدو سیستم
-    function fall() {
-        let fallCount = 0;
+.character {
+    position: absolute;
+    bottom: 100px;
+    left: 100px;
+    width: 60px;
+    height: 120px;
+}
 
-        const fallInterval = setInterval(() => {
-            if (fallCount >= jumpHeight || characterY + fallCount <= 100) {
-                clearInterval(fallInterval);
-                isJumping = false;
-            } else {
-                fallCount += gravity;
-                character.style.bottom = `${characterY + jumpHeight - fallCount}px`;
-            }
-        }, 20);
-    }
+.head {
+    width: 60px;
+    height: 60px;
+    background-color: #FFD700;
+    border-radius: 50%;
+    position: relative;
+    top: 0;
+}
 
-    // د خنډونو جوړول
-    function createObstacle() {
-        const obstacle = document.createElement("div");
-        obstacle.classList.add("obstacle");
-        obstacle.style.left = `${window.innerWidth}px`;
-        gameContainer.appendChild(obstacle);
+.body {
+    width: 50px;
+    height: 70px;
+    background-color: #FF6347;
+    margin: auto;
+    border-radius: 10px;
+    position: relative;
+    top: -10px;
+}
 
-        let obstacleX = window.innerWidth;
+.arm {
+    width: 15px;
+    height: 50px;
+    background-color: #FF6347;
+    position: absolute;
+    top: 20px;
+}
 
-        const obstacleMove = setInterval(() => {
-            if (!isGameRunning) {
-                clearInterval(obstacleMove);
-                obstacle.remove();
-                return;
-            }
+.left-arm { left: -20px; }
+.right-arm { right: -20px; }
 
-            obstacleX -= 5;
-            obstacle.style.left = `${obstacleX}px`;
+.leg {
+    width: 20px;
+    height: 60px;
+    background-color: #FF6347;
+    position: absolute;
+    bottom: -60px;
+}
 
-            // ټکر معلومول
-            if (
-                obstacleX < characterX + 60 &&
-                obstacleX + 50 > characterX &&
-                parseInt(character.style.bottom) < 150
-            ) {
-                endGame();
-            }
+.left-leg { left: 5px; }
+.right-leg { right: 5px; }
 
-            if (obstacleX <= 0) {
-                score++;
-                scoreDisplay.textContent = `Score: ${score}`;
-                clearInterval(obstacleMove);
-                obstacle.remove();
-            }
-        }, 20);
-    }
-
-    // د لوبې پای
-    function endGame() {
-        isGameRunning = false;
-        alert(`Game Over! Score: ${score}`);
-        location.reload();
-    }
-
-    // د کلیک کولو سره جمپ کول
-    gameContainer.addEventListener("click", () => {
-        if (isGameRunning) {
-            jump();
-        }
-    });
-
-    // هر 2 ثانیو کې یو خنډ جوړول
-    obstacleInterval = setInterval(() => {
-        if (isGameRunning) {
-            createObstacle();
-        }
-    }, 2000);
-});
+.obstacle {
+    width: 50px;
+    height: 50px;
+    background-color: #8B4513;
+    position: absolute;
+    bottom: 100px;
+}
