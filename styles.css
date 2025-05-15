@@ -10,48 +10,32 @@ body {
     height: 100vh;
     position: relative;
     overflow: hidden;
-    background-color: #87CEEB;
 }
 
 .score {
     position: absolute;
     top: 10px;
     left: 10px;
-    font-size: 20px;
-    color: #000;
-}
-
-.energy-bar {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 150px;
-    height: 20px;
-    background-color: #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.energy-bar .inner {
-    height: 100%;
-    background-color: #32CD32;
-    width: 100%;
-    transition: width 0.3s;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
 }
 
 .character {
     position: absolute;
     bottom: 100px;
     left: 100px;
-    width: 80px;
-    height: 180px;
+    width: 60px;
+    height: 120px;
 }
 
 .head {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     background-color: #FFD700;
     border-radius: 50%;
+    position: relative;
+    top: 0;
 }
 
 .body {
@@ -59,9 +43,9 @@ body {
     height: 70px;
     background-color: #FF6347;
     margin: auto;
+    border-radius: 10px;
     position: relative;
     top: -10px;
-    border-radius: 10px;
 }
 
 .arm {
@@ -69,7 +53,7 @@ body {
     height: 50px;
     background-color: #FF6347;
     position: absolute;
-    top: 30px;
+    top: 20px;
 }
 
 .left-arm { left: -20px; }
@@ -83,13 +67,13 @@ body {
     bottom: -60px;
 }
 
-.left-leg { left: 10px; }
-.right-leg { right: 10px; }
+.left-leg { left: 5px; }
+.right-leg { right: 5px; }
 
 .obstacle {
-    position: absolute;
-    bottom: 100px;
     width: 50px;
     height: 50px;
     background-color: #8B4513;
+    position: absolute;
+    bottom: 100px;
 }
