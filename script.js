@@ -1,104 +1,105 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const character = document.getElementById("character");
     const gameContainer = document.querySelector(".game-container");
+    const character = document.getElementById("character");
     const scoreDisplay = document.getElementById("score");
-    const energyBar = document.getElementById("energy-bar");
     
-    let positionX = 100;
-    let velocity = 5;
-    let jumpHeight = 120;
+    let characterX = 100;
+    let characterY = 100;
+    let jumpHeight = 150;
+    let gravity = 5;
     let isJumping = false;
-    let isBoosting = false;
     let score = 0;
-    let energy = 100;
+    let obstacleInterval;
+    let isGameRunning = true;
 
-    // حرکت کنټرول
-    window.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") positionX -= velocity;
-        if (e.key === "ArrowRight") positionX += velocity;
-        if (e.key === " " && !isJumping) jump();
-        if (e.key === "Shift" && energy > 0) boost();
-    });
-
-    window.addEventListener("keyup", (e) => {
-        if (e.key === "Shift") isBoosting = false;
-    });
-
+    // د جمپ کولو سیستم
     function jump() {
-        isJumping = true;
-        let jumpCount = 0;
+        if (!isJumping) {
+            isJumping = true;
+            let jumpCount = 0;
 
-        const jumpInterval = setInterval(() => {
-            if (jumpCount > jumpHeight) {
-                clearInterval(jumpInterval);
-                let fallInterval = setInterval(() => {
-                    if (jumpCount <= 0) {
-                        clearInterval(fallInterval);
-                        isJumping = false;
-                    }
-                    jumpCount -= 5;
-                    character.style.bottom = `${100 + jumpCount}px`;
-                }, 20);
+            const jumpInterval = setInterval(() => {
+                if (jumpCount >= jumpHeight) {
+                    clearInterval(jumpInterval);
+                    fall();
+                } else {
+                    jumpCount += 5;
+                    character.style.bottom = `${characterY + jumpCount}px`;
+                }
+            }, 20);
+        }
+    }
+
+    // د غورځېدو سیستم
+    function fall() {
+        let fallCount = 0;
+
+        const fallInterval = setInterval(() => {
+            if (fallCount >= jumpHeight || characterY + fallCount <= 100) {
+                clearInterval(fallInterval);
+                isJumping = false;
+            } else {
+                fallCount += gravity;
+                character.style.bottom = `${characterY + jumpHeight - fallCount}px`;
             }
-            jumpCount += 5;
-            character.style.bottom = `${100 + jumpCount}px`;
         }, 20);
     }
 
-    function boost() {
-        isBoosting = true;
-        let boostInterval = setInterval(() => {
-            if (!isBoosting || energy <= 0) {
-                clearInterval(boostInterval);
-            }
-            positionX += 10;
-            energy -= 2;
-            updateEnergyBar();
-        }, 50);
-    }
-
-    function updateEnergyBar() {
-        const innerBar = energyBar.querySelector(".inner");
-        innerBar.style.width = `${energy}%`;
-    }
-
+    // د خنډونو جوړول
     function createObstacle() {
         const obstacle = document.createElement("div");
         obstacle.classList.add("obstacle");
         obstacle.style.left = `${window.innerWidth}px`;
-        obstacle.style.backgroundColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
         gameContainer.appendChild(obstacle);
 
-        let obstaclePosition = window.innerWidth;
-        const speed = Math.random() * 5 + 3;
+        let obstacleX = window.innerWidth;
 
-        const obstacleInterval = setInterval(() => {
-            obstaclePosition -= speed;
-            obstacle.style.left = `${obstaclePosition}px`;
-
-            if (
-                obstaclePosition < positionX + 80 &&
-                obstaclePosition + 50 > positionX &&
-                !isJumping &&
-                parseInt(character.style.bottom) <= 100
-            ) {
-                alert(`Game Over! Score: ${score}`);
-                location.reload();
+        const obstacleMove = setInterval(() => {
+            if (!isGameRunning) {
+                clearInterval(obstacleMove);
+                obstacle.remove();
+                return;
             }
 
-            if (obstaclePosition < 0) {
+            obstacleX -= 5;
+            obstacle.style.left = `${obstacleX}px`;
+
+            // ټکر معلومول
+            if (
+                obstacleX < characterX + 60 &&
+                obstacleX + 50 > characterX &&
+                parseInt(character.style.bottom) < 150
+            ) {
+                endGame();
+            }
+
+            if (obstacleX <= 0) {
                 score++;
                 scoreDisplay.textContent = `Score: ${score}`;
+                clearInterval(obstacleMove);
                 obstacle.remove();
-                clearInterval(obstacleInterval);
             }
         }, 20);
     }
 
-    setInterval(() => {
-        if (energy < 100) energy += 1;
-        updateEnergyBar();
-    }, 100);
+    // د لوبې پای
+    function endGame() {
+        isGameRunning = false;
+        alert(`Game Over! Score: ${score}`);
+        location.reload();
+    }
 
-    setInterval(createObstacle, 1500);
+    // د کلیک کولو سره جمپ کول
+    gameContainer.addEventListener("click", () => {
+        if (isGameRunning) {
+            jump();
+        }
+    });
+
+    // هر 2 ثانیو کې یو خنډ جوړول
+    obstacleInterval = setInterval(() => {
+        if (isGameRunning) {
+            createObstacle();
+        }
+    }, 2000);
 });
