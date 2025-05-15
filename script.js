@@ -1,15 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
     const character = document.getElementById("character");
+    let positionX = 50;
     let direction = 1;
-    let positionX = 0;
 
-    setInterval(() => {
-        positionX += 5 * direction;
+    function moveCharacter() {
+        // حرکت زیاتول
+        positionX += 2 * direction;
 
-        if (positionX > window.innerWidth - 80 || positionX < 0) {
+        // که چپ یا ښي څنډې ته ورسېد، نو بېرته په مقابل لور ته حرکت وکړي
+        if (positionX >= window.innerWidth - 80 || positionX <= 0) {
             direction *= -1;
         }
 
+        // کرکټر ته نوې موقعیت ورکړه
         character.style.left = `${positionX}px`;
-    }, 30);
+
+        requestAnimationFrame(moveCharacter);
+    }
+
+    // حرکت پیل کړه
+    moveCharacter();
 });
