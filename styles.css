@@ -1,5 +1,5 @@
 body {
-    background-color: #87CEEB;
+    background-color: #87CEEB; /* اسمان رنګ */
     overflow: hidden;
     margin: 0;
     padding: 0;
@@ -7,33 +7,42 @@ body {
 
 .character {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: 50px;
+    top: 200px;
     width: 80px;
-    height: 160px;
-    animation: move 3s linear infinite alternate;
+    height: 150px;
+    transition: left 0.1s linear;
 }
 
 .head {
     width: 80px;
     height: 80px;
-    background-color: #FFCC33;
+    background-color: #FFD700; /* ژړ سر */
     border-radius: 50%;
-    position: relative;
-    margin-bottom: 10px;
 }
 
 .body {
-    width: 60px;
-    height: 80px;
-    background-color: #FF6347;
+    width: 50px;
+    height: 70px;
+    background-color: #FF6347; /* سور بدن */
     margin: auto;
-    border-radius: 15px;
+    position: relative;
+    top: -10px;
+    border-radius: 10px;
 }
 
-@keyframes move {
-    0% { left: 0; }
-    50% { left: 50%; top: 40%; }
-    100% { left: calc(100% - 80px); top: calc(100% - 160px); }
+.leg {
+    width: 20px;
+    height: 50px;
+    background-color: #FF6347;
+    position: absolute;
+    bottom: -50px;
+}
+
+.left {
+    left: 10px;
+}
+
+.right {
+    right: 10px;
 }
