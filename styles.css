@@ -1,48 +1,102 @@
 body {
-    background-color: #87CEEB; /* اسمان رنګ */
+    background-color: #87CEEB;
     overflow: hidden;
     margin: 0;
     padding: 0;
 }
 
+.game-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: #87CEEB;
+}
+
 .character {
     position: absolute;
-    left: 50px;
-    top: 200px;
+    bottom: 100px;
+    left: 100px;
     width: 80px;
-    height: 150px;
+    height: 180px;
     transition: left 0.1s linear;
 }
 
 .head {
     width: 80px;
     height: 80px;
-    background-color: #FFD700; /* ژړ سر */
+    background-color: #FFD700;
     border-radius: 50%;
+    position: relative;
 }
 
 .body {
     width: 50px;
     height: 70px;
-    background-color: #FF6347; /* سور بدن */
+    background-color: #FF6347;
     margin: auto;
     position: relative;
     top: -10px;
     border-radius: 10px;
 }
 
-.leg {
-    width: 20px;
+.arm {
+    width: 15px;
     height: 50px;
     background-color: #FF6347;
     position: absolute;
-    bottom: -50px;
+    top: 30px;
 }
 
-.left {
+.left-arm {
+    left: -20px;
+    animation: swing 0.5s linear infinite alternate;
+}
+
+.right-arm {
+    right: -20px;
+    animation: swing 0.5s linear infinite alternate-reverse;
+}
+
+.leg {
+    width: 20px;
+    height: 60px;
+    background-color: #FF6347;
+    position: absolute;
+    bottom: -60px;
+    animation: walk 0.5s linear infinite alternate;
+}
+
+.left-leg {
     left: 10px;
 }
 
-.right {
+.right-leg {
     right: 10px;
+}
+
+.obstacle {
+    position: absolute;
+    bottom: 100px;
+    width: 50px;
+    height: 50px;
+    background-color: #8B4513;
+}
+
+.score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    color: #000;
+}
+
+@keyframes swing {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(15deg); }
+}
+
+@keyframes walk {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(15deg); }
 }
