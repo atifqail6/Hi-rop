@@ -1,15 +1,39 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const character = document.getElementById("character");
-    let direction = 1;
-    let positionX = 0;
+body {
+    background-color: #87CEEB;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
 
-    setInterval(() => {
-        positionX += 5 * direction;
+.character {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 160px;
+    animation: move 3s linear infinite alternate;
+}
 
-        if (positionX > window.innerWidth - 80 || positionX < 0) {
-            direction *= -1;
-        }
+.head {
+    width: 80px;
+    height: 80px;
+    background-color: #FFCC33;
+    border-radius: 50%;
+    position: relative;
+    margin-bottom: 10px;
+}
 
-        character.style.left = `${positionX}px`;
-    }, 30);
-});
+.body {
+    width: 60px;
+    height: 80px;
+    background-color: #FF6347;
+    margin: auto;
+    border-radius: 15px;
+}
+
+@keyframes move {
+    0% { left: 0; }
+    50% { left: 50%; top: 40%; }
+    100% { left: calc(100% - 80px); top: calc(100% - 160px); }
+}
